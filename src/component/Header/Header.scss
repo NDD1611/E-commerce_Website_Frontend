@@ -1,0 +1,137 @@
+#Header {
+    padding: 0 160px;
+    background-color: #ffd400;
+
+    .top {
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        // height: 40px;
+
+        // div {
+        //     border: 1px solid blue;
+        // }
+        .bordercol {
+            background-color: #fff;
+            width: 1px;
+            height: 40px;
+        }
+
+        .logo {
+            flex-grow: 3;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                height: 100%;
+            }
+        }
+
+        .search {
+            overflow: hidden;
+            border-radius: 5px;
+            flex-grow: 40;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+
+            input {
+                height: 80%;
+                padding: 20px;
+                flex-grow: 9;
+            }
+
+            .search_icon {
+                font-size: 20px;
+                flex-grow: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .history_cart {
+            flex-grow: 2;
+            height: 100%;
+            padding: 0 10px;
+            text-align: center;
+            background-color: #ffbc06;
+            border-radius: 5px;
+        }
+
+        .cart {
+            flex-grow: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 10px;
+            background-color: #ffbc06;
+
+            p {
+                height: 100%;
+                // line-height: 50px;
+                padding-left: 10px;
+                border-radius: 5px;
+                margin: 0 !important;
+            }
+        }
+
+        .news {
+            flex-grow: 2;
+            height: 100%;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .question {
+            flex-grow: 2;
+            height: 100%;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 5px;
+        }
+
+        .game_app {
+            flex-grow: 2;
+            height: 100%;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 5px;
+        }
+    }
+
+    .bottom {
+
+        padding: 10px 0;
+
+        ul {
+            display: flex;
+            justify-content: space-between;
+            list-style-type: none;
+            padding-left: 0px !important;
+
+            li {
+
+                a {
+                    display: flex;
+                    text-decoration: none;
+                    color: #000;
+
+                    img {
+                        width: 20px;
+                    }
+
+                    span {
+                        padding-left: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

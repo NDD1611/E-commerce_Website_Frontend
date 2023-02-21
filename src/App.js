@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DTDD from './pages/DTDD/DTDD.js'
+import DisplayImage from "./component/DisplayImage.js";
+import NoPage from './pages/NoPage/NoPage.js'
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dtdd" element={<DTDD />} />
+          <Route path="/getallimagefromserver" element={<DisplayImage />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </BrowserRouter>
+      <script src="https://kit.fontawesome.com/5efaa1de1d.js" crossorigin="anonymous"></script>
     </div>
   );
 }

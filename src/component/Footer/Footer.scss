@@ -1,0 +1,27 @@
+#Footer {
+    padding: 0 160px;
+    display: flex;
+    justify-content: space-between;
+
+    ul {
+        flex-grow: 1;
+
+        li {
+            list-style: none;
+            padding: 3px 0;
+
+            span {
+                font-weight: bold;
+            }
+
+            i {
+                padding-left: 5px;
+            }
+
+            a {
+                text-decoration: none;
+                font-weight: 600;
+            }
+        }
+    }
+}

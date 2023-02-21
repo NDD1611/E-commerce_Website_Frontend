@@ -1,0 +1,21 @@
+#display_image {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .container {
+        // display: flex;
+        border: 1px solid blue;
+        width: 30%;
+
+        .image {
+            width: 150px;
+
+            img {
+                width: 100%;
+            }
+
+        }
+    }
+
+}
