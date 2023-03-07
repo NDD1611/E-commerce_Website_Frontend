@@ -1,0 +1,32 @@
+.brand-content {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px 10px #ccc;
+    width: 500px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.border-blue {
+    border: 1px solid blue !important;
+}
+
+.brand_img {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 100px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        width: 90%;
+    }
+}

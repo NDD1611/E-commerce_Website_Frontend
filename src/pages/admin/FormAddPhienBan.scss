@@ -1,0 +1,93 @@
+#FormAddPhienBan {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #fff;
+
+    .bg_modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+        z-index: 1;
+    }
+
+    .my_modal {
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        .my_btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background-color: #ccc;
+        }
+
+
+        .content_modal {
+            padding: 20px 0;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .bg_f1 {
+                background-color: #ccc;
+            }
+
+            .label_input {
+                padding: 10px 0;
+
+                input[type=radio] {
+                    margin: 0 5px;
+                }
+
+                label {
+                    width: 200px;
+                }
+            }
+
+        }
+
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+
+        thead {
+            tr {
+
+                text-align: center;
+            }
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .buttons {
+            i {
+                padding: 5px;
+
+                &:hover {
+                    background-color: #dac314;
+                }
+            }
+        }
+    }
+
+
+}

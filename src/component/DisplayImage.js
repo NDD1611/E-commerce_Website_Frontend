@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Service from '../service/Services.js'
+import Service from '../services/Services.js'
 import './DisplayImage.scss'
 
 let DisplayImage = () => {
@@ -20,7 +20,6 @@ let DisplayImage = () => {
         getImage()
     }, [])
 
-    // console.log(listImgs)
     let handleInput = (e) => {
         let value = e.target.value
         let newLists = dataImages.filter((img) => {

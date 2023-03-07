@@ -114,16 +114,12 @@ function CarouselC() {
             {
                 listCarousels.map((slide) => {
                     return (
-                        <Carousel.Item interval={5000}>
+                        <Carousel.Item key={slide.src} interval={1000}>
                             <img
                                 className="d-block w-100"
                                 src={slide.src}
                                 alt="First slide"
                             />
-                            {/* <Carousel.Caption>
-                                <h3>First slide label</h3>
-                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                            </Carousel.Caption> */}
                         </Carousel.Item>
                     )
                 })

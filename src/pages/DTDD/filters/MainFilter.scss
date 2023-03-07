@@ -1,0 +1,78 @@
+.main-filter {
+    position: absolute;
+    top: 50px;
+    left: 0;
+
+    .main-filter-content {
+        z-index: 3;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        box-shadow: 0 0 20px 10px #ccc;
+        width: 1000px;
+        padding: 10px;
+
+        .close_filter {
+            color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            position: absolute;
+            padding: 5px 10px;
+            top: 5px;
+            border-radius: 5px;
+            right: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+
+            &:hover {
+                color: #000;
+            }
+
+            i {
+                padding-top: 3px;
+                margin-right: 5px;
+            }
+        }
+
+        .price_ram_rom {
+            display: flex;
+
+            .title {
+                text-align: left;
+            }
+        }
+
+        .title-filter {
+            text-align: left;
+        }
+
+        .brand-content {
+            z-index: 3;
+            position: relative;
+            background-color: #fff;
+            box-shadow: none;
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+
+        .ram-content,
+        .rom-content,
+        .price-content {
+            z-index: 3;
+            position: relative;
+            background-color: #fff;
+            box-shadow: none;
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+    }
+}

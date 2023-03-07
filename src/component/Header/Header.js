@@ -8,11 +8,11 @@ function Header() {
         {
             src: process.env.REACT_APP_BACKEND_URL + '/public/image/icon-phone-96x96-2.webp',
             span: 'Điện thoại',
-            url: '/getallimagefromserver'
+            url: '/dtdd'
         }, {
             src: process.env.REACT_APP_BACKEND_URL + '/public/image/icon-laptop-96x96-1.webp',
             span: 'Laptop',
-            url: '#'
+            url: '/laptop'
         }, {
             src: process.env.REACT_APP_BACKEND_URL + '/public/image/icon-tablet-96x96-1.webp',
             span: 'Tablet',
@@ -59,12 +59,12 @@ function Header() {
                     <div className="search">
                         <input placeholder='Bạn tìm gì...' />
                         <div className="search_icon">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
                     </div>
                     <div className="history_cart">Lịch sử đơn <br /> hàng</div>
                     <div className="cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <i className="fa-solid fa-cart-shopping"></i>
                         <p>Giỏ hàng</p>
                     </div>
                     <div className="news">24h <br />Công nghệ</div>
@@ -80,9 +80,9 @@ function Header() {
                 <div className="bottom">
                     <ul>
                         {
-                            listDataBottom.map((item) => {
+                            listDataBottom.map((item, index) => {
                                 return (
-                                    <li className=''>
+                                    <li className='' key={index}>
                                         <Link to={item.url}>
                                             <div>
                                                 <img src={item.src} />

@@ -1,0 +1,21 @@
+#SANPHAM {
+    display: flex;
+    position: relative;
+
+
+    .right {
+        border: 1px solid blue;
+        width: 100%;
+
+        .san_pham {
+            background-color: #ccc;
+            margin: 10px 0;
+        }
+
+        .top {
+            padding-top: 30px;
+            border: 1px solid red;
+
+        }
+    }
+}

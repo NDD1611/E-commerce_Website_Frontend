@@ -1,0 +1,18 @@
+#Menu {
+    width: 200px;
+    // background-color: #ccc;
+
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .line_menu {
+        padding: 10px 0;
+
+        &:hover {
+            background-color: #ccc;
+        }
+
+    }
+}

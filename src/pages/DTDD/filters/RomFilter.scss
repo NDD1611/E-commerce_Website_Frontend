@@ -1,0 +1,25 @@
+.rom-content {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 20px 10px #ccc;
+    width: 500px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px;
+
+    .border-blue {
+        border: 1px solid blue;
+    }
+
+
+    div {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+
+    }
+}

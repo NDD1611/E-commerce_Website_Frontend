@@ -1,0 +1,62 @@
+#PHIENBAN {
+    // display: flex;   
+    width: 100%;
+
+    margin: 0 auto;
+    position: absolute;
+
+
+    .bg_f1 {
+        background-color: #f1f1f1;
+    }
+
+    .my_modal {
+        position: absolute;
+        background-color: #fff;
+        z-index: 9999;
+        padding: 100px;
+
+        .btn_hide_form {
+            position: absolute;
+            right: 50px;
+            top: 30px;
+            background-color: #ccc;
+        }
+
+        label {
+            width: 300px;
+        }
+
+        .label_radio {
+            width: 100px;
+            padding-left: 10px;
+        }
+
+        input[type=text] {
+            width: 500px
+        }
+
+        .label_input {
+            margin: 10px 0;
+        }
+
+
+        .list_tinh_nang {
+            display: flex;
+            flex-wrap: wrap;
+
+            input[type=checkbox] {
+                width: 20px;
+                height: 20px;
+                margin: 5px;
+            }
+        }
+
+        .camera_sau {
+
+            .label_flash {
+                width: 50px;
+            }
+        }
+    }
+}

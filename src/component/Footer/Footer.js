@@ -10,7 +10,7 @@ function Footer() {
                 <li>Tìm hiểu về mua trả góp</li>
                 <li>Chính sách bảo hành</li>
                 <li>Xem thêm
-                    <i class="fa-solid fa-caret-down"></i>
+                    <i className="fa-solid fa-caret-down"></i>
                 </li>
                 <li></li>
             </ul>
