@@ -3,35 +3,12 @@ import './RamFilter.scss'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { addRamFilter, addRamFilterBorder } from "../../../redux/actionCreator"
+import { listRams } from './dataFilterCommon.js'
 
 function RamFilter() {
 
-    let listRams = [
-        {
-            key: '2',
-            value: '2 GB'
-        },
-        {
-            key: '3',
-            value: '3 GB'
-        },
-        {
-            key: '4',
-            value: '4 GB'
-        },
-        {
-            key: '6',
-            value: '6 GB'
-        },
-        {
-            key: '8',
-            value: '8 GB'
-        },
-        {
-            key: '12',
-            value: '12 GB'
-        },
-    ]
+
+
     let listIndexBorderFromStore = useSelector((state) => {
         return state.filters.listIndexRamBorder
     })

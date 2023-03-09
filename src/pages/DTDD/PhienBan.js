@@ -30,9 +30,9 @@ function PhienBan(props) {
     }
 
     let getAllData = async () => {
-        let listShowFromServer = await Services.getPhienBanEqualMaSp(props.sp.maSp)
-        checkShowRam(listShowFromServer.data)
-        setListShow(listShowFromServer.data)
+        let listPhienBan = await Services.getPhienBanEqualMaSp(props.sp.maSp)
+        checkShowRam(listPhienBan.data)
+        setListShow(listPhienBan.data)
     }
     let checkPrice = (giaCu) => {
         let phanNguyen = parseInt(giaCu / 1000000)
@@ -47,18 +47,13 @@ function PhienBan(props) {
             phanNguyen -= 1
             phanDu = 990000
         }
-
-
         return phanNguyen * 1000000 + phanDu
     }
 
     useEffect(() => {
         getAllData()
-    }, [])
+    }, [props])
 
-    let text = () => {
-        console.log(listShow[indexPb])
-    }
 
     let checkGiaGiamThem = (price) => {
         let gia = price + 'đ'
@@ -72,9 +67,10 @@ function PhienBan(props) {
     let imageGiaGiamThem = process.env.REACT_APP_BACKEND_URL + '/public/image/icon3-50x50.webp'
     let imageGiaSieuHot = process.env.REACT_APP_BACKEND_URL + '/public/image/icon5-50x50.webp'
 
+
     if (listShow.length)
         return (
-            <li className="product">
+            <li className="product" >
                 <span className={listShow[indexPb].coTraGop == 'true' ? "tra_gop" : 'my_hidden'}>Trả góp 0%</span>
                 <span className={listShow[indexPb].coTraGop == 'true' ? 'my_hidden' : "tra_gop bg_none"}></span>
                 <div className="product_img">
@@ -86,7 +82,7 @@ function PhienBan(props) {
 
                 {
                     listShow[indexPb].coGiaMoiSieuHot == 'true' ?
-                        < span className="giaMoiSieuHot" onClick={text}>
+                        < span className="giaMoiSieuHot">
                             <img src={imageGiaSieuHot} />
                             <span>
                                 GIÁ MỚI SIÊU HOT
@@ -96,7 +92,7 @@ function PhienBan(props) {
 
                 {
                     listShow[indexPb].coGiamThem == 'true' ?
-                        < span className="giaGiamThem" onClick={text}>
+                        < span className="giaGiamThem" >
                             <img src={imageGiaGiamThem} />
                             <span>
                                 GIẢM THÊM {checkGiaGiamThem(listShow[indexPb].tienGiamThem)}

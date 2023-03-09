@@ -3,35 +3,10 @@ import './RomFilter.scss'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { addRomFilter, addRomFilterBorder } from "../../../redux/actionCreator"
+import { listRoms } from './dataFilterCommon.js'
+
 
 function RomFilter() {
-
-    let listRoms = [
-        {
-            key: '32',
-            value: '32 GB'
-        },
-        {
-            key: '64',
-            value: '64 GB'
-        },
-        {
-            key: '128',
-            value: '128 GB'
-        },
-        {
-            key: '256',
-            value: '256 GB'
-        },
-        {
-            key: '512',
-            value: '512 GB'
-        },
-        {
-            key: '1024',
-            value: '1 TB'
-        },
-    ]
 
     let listIndexBorderFromStore = useSelector((state) => {
         return state.filters.listIndexRomBorder

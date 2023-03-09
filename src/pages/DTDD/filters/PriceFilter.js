@@ -4,46 +4,13 @@ import './PriceFilter.scss'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addPriceFilter, addPriceFilterBorder } from '../../../redux/actionCreator.js'
-
+import { listPrices } from './dataFilterCommon.js'
 function PriceFilter() {
 
     let dispatch = useDispatch()
     let listIndexBorderFromStore = useSelector((state) => {
         return state.filters.listIndexPriceBorder
     })
-
-    let listPrices = [
-        {
-            dau: '0',
-            cuoi: '2',
-            value: 'Dưới 2 triệu'
-        },
-        {
-            dau: '2',
-            cuoi: '4',
-            value: 'Từ 2 - 4 triệu'
-        },
-        {
-            dau: '4',
-            cuoi: '7',
-            value: 'Từ 4 - 7 triệu'
-        },
-        {
-            dau: '7',
-            cuoi: '13',
-            value: 'Từ 7 - 13 triệu'
-        },
-        {
-            dau: '13',
-            cuoi: '20',
-            value: 'Từ 13 - 20 triệu'
-        },
-        {
-            dau: '20',
-            cuoi: '200',
-            value: 'Trên 20 triệu'
-        },
-    ]
 
     let checkBorderBlue = (index) => {
         let check = false

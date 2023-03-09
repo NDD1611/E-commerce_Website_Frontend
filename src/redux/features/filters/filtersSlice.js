@@ -15,49 +15,49 @@ const initialState = {
 
 export default function filtersReducer(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.ADD_BRAND_FILTER.type: {
+        case actionTypes.ADD_BRAND_FILTER: {
             return {
                 ...state,
                 brand: action.payload
             }
         }
-        case actionTypes.ADD_BRAND_FILTER_BORDER.type: {
+        case actionTypes.ADD_BRAND_FILTER_BORDER: {
             return {
                 ...state,
                 listIndexBrandBorder: action.payload
             }
         }
-        case actionTypes.ADD_PRICE_FILTER.type: {
+        case actionTypes.ADD_PRICE_FILTER: {
             return {
                 ...state,
                 price: action.payload
             }
         }
-        case actionTypes.ADD_PRICE_FILTER_BORDER.type: {
+        case actionTypes.ADD_PRICE_FILTER_BORDER: {
             return {
                 ...state,
                 listIndexPriceBorder: action.payload
             }
         }
-        case actionTypes.ADD_RAM_FILTER.type: {
+        case actionTypes.ADD_RAM_FILTER: {
             return {
                 ...state,
                 ram: action.payload
             }
         }
-        case actionTypes.ADD_RAM_FILTER_BORDER.type: {
+        case actionTypes.ADD_RAM_FILTER_BORDER: {
             return {
                 ...state,
                 listIndexRamBorder: action.payload
             }
         }
-        case actionTypes.ADD_ROM_FILTER.type: {
+        case actionTypes.ADD_ROM_FILTER: {
             return {
                 ...state,
                 rom: action.payload
             }
         }
-        case actionTypes.ADD_ROM_FILTER_BORDER.type: {
+        case actionTypes.ADD_ROM_FILTER_BORDER: {
             return {
                 ...state,
                 listIndexRomBorder: action.payload

@@ -5,35 +5,6 @@ import Services from '../../services/Services'
 import './PhienBanDayDu.scss'
 
 function PhienBan(props) {
-    console.log(props)
-    let [indexPb, setIndexPb] = useState(0)
-    let [listShow, setListShow] = useState([])
-    let [showRam, setShowRam] = useState(true)
-
-
-    let checkShowRam = (lists) => {
-        if (lists) {
-            let ram = lists[0].Ram
-            lists.map((phienBan) => {
-                if (phienBan.Ram != ram) {
-                    setShowRam(true)
-                } else {
-                    setShowRam(false)
-                }
-            })
-        }
-
-    }
-
-    let handleClickButtonRam = (index) => {
-        setIndexPb(index)
-    }
-
-    let getAllData = async () => {
-        let listShowFromServer = await Services.getPhienBanEqualMaSp(props.sp.maSp)
-        checkShowRam(listShowFromServer.data)
-        setListShow(listShowFromServer.data)
-    }
     let checkPrice = (giaCu) => {
         let phanNguyen = parseInt(giaCu / 1000000)
         let phanDu = giaCu % 1000000
@@ -47,17 +18,7 @@ function PhienBan(props) {
             phanNguyen -= 1
             phanDu = 990000
         }
-
-
         return phanNguyen * 1000000 + phanDu
-    }
-
-    useEffect(() => {
-        getAllData()
-    }, [])
-
-    let text = () => {
-        console.log(listShow[indexPb])
     }
 
     let checkGiaGiamThem = (price) => {
@@ -69,99 +30,94 @@ function PhienBan(props) {
         return gia
     }
 
+    let chechShowRom = (rom) => {
+        let newRom = parseInt(rom)
+        if (newRom < 1024) {
+            return rom + 'GB'
+        } else {
+            return parseInt(rom / 1000) + 'TB'
+        }
+    }
+
     let imageGiaGiamThem = process.env.REACT_APP_BACKEND_URL + '/public/image/icon3-50x50.webp'
     let imageGiaSieuHot = process.env.REACT_APP_BACKEND_URL + '/public/image/icon5-50x50.webp'
 
-    if (listShow.length)
-        return (
-            <li className="product_day_du">
-                <span className={listShow[indexPb].coTraGop == 'true' ? "tra_gop" : 'my_hidden'}>Trả góp 0%</span>
-                <span className={listShow[indexPb].coTraGop == 'true' ? 'my_hidden' : "tra_gop bg_none"}></span>
-                <div className="product_img">
-                    <div className="bg_img">
-                        <img src={listShow[indexPb].imgReview} />
-                    </div>
+    return (
+        <li className="product_day_du">
+            <span className={props.sp.coTraGop == 'true' ? "tra_gop" : 'my_hidden'}>Trả góp 0%</span>
+            <span className={props.sp.coTraGop == 'true' ? 'my_hidden' : "tra_gop bg_none"}></span>
+            <div className="product_img">
+                <div className="bg_img">
+                    <img src={props.sp.imgReview} />
                 </div>
+            </div>
 
 
-                {
-                    listShow[indexPb].coGiaMoiSieuHot == 'true' ?
-                        < span className="giaMoiSieuHot" onClick={text}>
-                            <img src={imageGiaSieuHot} />
-                            <span>
-                                GIÁ MỚI SIÊU HOT
-                            </span>
-                        </span> : ''
-                }
+            {
+                props.sp.coGiaMoiSieuHot == 'true' ?
+                    < span className="giaMoiSieuHot" >
+                        <img src={imageGiaSieuHot} />
+                        <span>
+                            GIÁ MỚI SIÊU HOT
+                        </span>
+                    </span> : ''
+            }
 
-                {
-                    listShow[indexPb].coGiamThem == 'true' ?
-                        < span className="giaGiamThem" onClick={text}>
-                            <img src={imageGiaGiamThem} />
-                            <span>
-                                GIẢM THÊM {checkGiaGiamThem(listShow[indexPb].tienGiamThem)}
-                            </span>
-                        </span> : ''
-                }
-                <div className="product_Name">{props.sp.tenSp + ' ' + props.sp.mangDiDong}</div>
-                <div className="monitor">
-                    <span className="size">{props.sp.kichThuocManHinh}"</span>
-                    <span className="tech">{props.sp.congNgheManHinh}</span>
-                </div>
-                {/* <div className='list_btn_ram_rom'>
+            {
+                props.sp.coGiamThem == 'true' ?
+                    < span className="giaGiamThem" >
+                        <img src={imageGiaGiamThem} />
+                        <span>
+                            GIẢM THÊM {checkGiaGiamThem(props.sp.tienGiamThem)}
+                        </span>
+                    </span> : ''
+            }
+            <div className="product_Name">{props.sp.tenSp + ' ' + props.sp.mangDiDong}</div>
+            <div className="monitor">
+                <span className="size">{props.sp.kichThuocManHinh}"</span>
+                <span className="tech">{props.sp.congNgheManHinh}</span>
+            </div>
+            <div className='price-phienban'>
+                <div className={props.sp.coGiamGia == 'true' ? 'cost line_through' : 'cost text_bold'}>
                     {
-
-                        listShow.map((phienBan, index) => {
-                            if (listShow.length > 1)
-                                return (
-                                    <button key={index} onClick={(e) => { handleClickButtonRam(index) }} className={indexPb == index ? 'btn_ram_rom active' : 'btn_ram_rom'}>
-                                        {showRam ? phienBan.Ram + 'GB - ' : ''}{phienBan.Rom > 1000 ? '1TB' : phienBan.Rom + 'GB'}
-                                    </button >
-                                )
-                        })
-                    }
-                </div> */}
-                <div className='price-phienban'>
-                    <div className={listShow[indexPb].coGiamGia == 'true' ? 'cost line_through' : 'cost text_bold'}>
-                        {
-                            new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(listShow[indexPb].cost)
-                        }
-                    </div>
-                    <span className={listShow[indexPb].coGiamGia == 'true' ? '' : 'my_hidden'}>
-                        {"-" + listShow[indexPb].discount + "%"}
-                    </span>
-                </div>
-                <div className={listShow[indexPb].coGiamGia == 'true' ? 'text_bold' : 'my_hidden'}>
-                    {
-                        new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(checkPrice(listShow[indexPb].cost - (listShow[indexPb].cost * listShow[indexPb].discount) / 100))
+                        new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(props.sp.cost)
                     }
                 </div>
-                <ul className='chi_tiet'>
-                    <li>
-                        Chip <span>{props.sp.CPU}</span>
-                    </li>
-                    <li>
-                        Ram: <span>{props.sp.Ram}GB</span>
-                    </li>
-                    <li>
-                        Dung lượng: <span>{props.sp.Rom}GB</span>
-                    </li>
-                    <li>
-                        Camera sau: <span>{props.sp.doPhanGiaiCameraSau}</span>
-                    </li>
-                    <li>
-                        Camera trước: <span>{props.sp.doPhanGiaiCameraTruoc}</span>
-                    </li>
-                    <li>
-                        Pin: <span>{props.sp.capacityPin}</span>
-                    </li>
-                    <li>
-                        Sạc: <span>{props.sp.hoTroSac}</span>
-                    </li>
-                </ul>
-            </li >
+                <span className={props.sp.coGiamGia == 'true' ? '' : 'my_hidden'}>
+                    {"-" + props.sp.discount + "%"}
+                </span>
+            </div>
+            <div className={props.sp.coGiamGia == 'true' ? 'text_bold' : 'my_hidden'}>
+                {
+                    new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(checkPrice(props.sp.cost - (props.sp.cost * props.sp.discount) / 100))
+                }
+            </div>
+            <ul className='chi_tiet'>
+                <li>
+                    Chip <span>{props.sp.CPU}</span>
+                </li>
+                <li>
+                    Ram: <span>{props.sp.Ram}GB</span>
+                </li>
+                <li>
+                    Dung lượng: <span>{chechShowRom(props.sp.Rom)}</span>
+                </li>
+                <li>
+                    Camera sau: <span>{props.sp.doPhanGiaiCameraSau}</span>
+                </li>
+                <li>
+                    Camera trước: <span>{props.sp.doPhanGiaiCameraTruoc}</span>
+                </li>
+                <li>
+                    Pin: <span>{props.sp.capacityPin}</span>
+                </li>
+                <li>
+                    Sạc: <span>{props.sp.hoTroSac}</span>
+                </li>
+            </ul>
+        </li >
 
-        )
+    )
 }
 
 export default PhienBan;

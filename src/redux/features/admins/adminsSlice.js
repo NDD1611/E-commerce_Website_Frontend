@@ -7,13 +7,13 @@ const initialState = {
 
 export default function adminsReducer(state = initialState, action) {
     switch (action.type) {
-        case Action.ADMIN_SHOW_MODAL_ADD_PHIEN_BAN.type: {
+        case Action.ADMIN_SHOW_MODAL_ADD_PHIEN_BAN: {
             return {
                 ...state,
                 showModalAddPhienBan: true
             }
         }
-        case Action.ADMIN_HIDE_MODAL_ADD_PHIEN_BAN.type: {
+        case Action.ADMIN_HIDE_MODAL_ADD_PHIEN_BAN: {
             return {
                 ...state,
                 showModalAddPhienBan: false
