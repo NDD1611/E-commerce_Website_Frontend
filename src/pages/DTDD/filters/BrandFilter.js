@@ -1,63 +1,51 @@
 
 import "./BrandFilter.scss"
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { addBrandFilter, addBrandFilterBorder } from "../../../redux/actionCreator"
-function BrandFilter(props) {
+import FooterFilter from './FooterFilter'
+import actionTypes from "../../../redux/actions"
+function BrandFilter() {
 
     let dispatch = useDispatch()
-
-    let listIndexBorders = useSelector((state) => {
-        return state.filters.listIndexBrandBorder
+    let filters = useSelector(state => {
+        return state.filters
     })
 
     useEffect(() => {
-        setListIndexBorder(listIndexBorders)
-    }, [listIndexBorders])
-
-    let checkBorderBlue = (index) => {
-        let check = false
-        for (let idx of listIndexBorder) {
-            if (index === idx) {
-                check = true
+    }, [filters])
+    let addBrandFilterStore = (brand) => {
+        let newListBrands = filters.listBrandFilter.map((obj) => {
+            if (brand.maNsx === obj.maNsx) {
+                return {
+                    ...brand,
+                    select: !brand.select
+                }
+            } else {
+                return obj
             }
-        }
-        return check
-    }
-
-    let handleClick = (indexBD) => {
-        let copyListIndex = [...listIndexBorder]
-        let check = false
-        copyListIndex = copyListIndex.filter((index) => {
-            if (indexBD === index) {
-                check = true
-            }
-            return indexBD !== index
         })
-        if (check === false) {
-            copyListIndex.push(indexBD)
-        }
-        let listBrandFilter = props.listBrands.filter((brand, index) => {
-            return copyListIndex.includes(index)
+        dispatch({
+            type: actionTypes.UPDATE_LIST_BRAND_FILTER,
+            payload: newListBrands
         })
-        dispatch(addBrandFilter(listBrandFilter))
-        dispatch(addBrandFilterBorder(copyListIndex))
-        setListIndexBorder(copyListIndex)
     }
-
-    let [listIndexBorder, setListIndexBorder] = useState([])
-
     return (
         <div>
             <div className="brand-content">
-                {
-                    props.listBrands.map((brand, index) => {
-                        return (
-                            <div key={index} className={checkBorderBlue(index) ? "brand_img border-blue" : "brand_img"} onClick={() => { handleClick(index) }}>
-                                <img src={brand.linkImg} />
-                            </div>
-                        )
-                    })
+                <div className="content_filter">
+                    {
+                        filters.listBrandFilter.map((brand, index) => {
+                            return (
+                                <div key={index} className={brand.select ? "brand_img border-blue" : 'brand_img'} onClick={() => { addBrandFilterStore(brand) }}>
+                                    <img src={brand.linkImg} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                {filters.showXemKetQuaBPRR ?
+                    <FooterFilter />
+                    : ''
                 }
             </div>
         </div>

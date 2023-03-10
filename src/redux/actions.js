@@ -4,17 +4,35 @@ let actionTypes = {
     ADMIN_SHOW_MODAL_ADD_PHIEN_BAN: 'admins/showModalAddPhienBan',
     ADMIN_HIDE_MODAL_ADD_PHIEN_BAN: 'admins/hideModalAddPhienBan',
 
-    ADD_BRAND_FILTER: 'filters/addbrandfilter',
-    ADD_BRAND_FILTER_BORDER: 'filters/addbrandfilterborder',
-    ADD_PRICE_FILTER: 'filters/addpricefilter',
-    ADD_PRICE_FILTER_BORDER: 'filters/addpricefilterborder',
-    ADD_RAM_FILTER: 'filters/addramfilter',
-    ADD_RAM_FILTER_BORDER: 'filters/addramfilterborder',
-    ADD_ROM_FILTER: 'filters/addromfilter',
-    ADD_ROM_FILTER_BORDER: 'filters/addromfilterborder',
-
+    ADD_LIST_BRAND: 'dataAlls/add_list_brand',
     ADD_LIST_SAN_PHAM: 'dataAlls/add_list_san_pham',
-    ADD_LIST_SAN_PHAM_DAY_DU: 'dataAlls/add_list_san_pham_day_du'
+    ADD_LIST_SAN_PHAM_DAY_DU: 'dataAlls/add_list_san_pham_day_du',
+
+
+    HIDE_ALL_FILTER: 'filters/HIDE_ALL_FILTER',
+    SHOW_MAIN_FILTER: 'filters/SHOW_MAIN_FILTER',
+    SHOW_BRAND_FILTER: 'filters/SHOW_BRAND_FILTER',
+    SHOW_PRICE_FILTER: 'filters/SHOW_PRICE_FILTER',
+    SHOW_RAM_FILTER: 'filters/SHOW_RAM_FILTER',
+    SHOW_ROM_FILTER: 'filters/SHOW_ROM_FILTER',
+    UPDATE_LIST_BRAND_FILTER: 'filters/UPDATE_LIST_BRAND_FILTER',
+    UPDATE_LIST_PRICE_FILTER: 'filters/UPDATE_LIST_PRICE_FILTER',
+    UPDATE_LIST_RAM_FILTER: 'filters/UPDATE_LIST_RAM_FILTER',
+    UPDATE_LIST_ROM_FILTER: 'filters/UPDATE_LIST_ROM_FILTER',
+    UPDATE_IS_FILTER_ONLY_BRAND: 'filters/UPDATE_IS_FILTER_ONLY_BRAND',
+    UPDATE_LIST_AFTER_FILTER_ONLY_BRAND: 'filters/UPDATE_LIST_AFTER_FILTER_ONLY_BRAND',
+    UPDATE_LIST_AFTER_FILTER_MANY_FIELD: 'filters/UPDATE_LIST_AFTER_FILTER_MANY_FIELD',
+    SHOW_XEM_KET_QUA_BPRR: 'filters/SHOW_XEM_KET_QUA_BPRR',
+    HIDE_XEM_KET_QUA_BPRR: 'filters/HIDE_XEM_KET_QUA_BPRR',
+    SHOW_XEM_KET_QUA_MAIN: 'filters/SHOW_XEM_KET_QUA_MAIN',
+    HIDE_XEM_KET_QUA_MAIN: 'filters/HIDE_XEM_KET_QUA_MAIN',
+    UPDATE_LENGTH_XEM_KET_QUA: 'filters/UPDATE_LENGTH_XEM_KET_QUA',
+    SET_LIST_SAN_PHAM: 'filters/SET_LIST_SAN_PHAM',
+    SET_LIST_PHIEN_BAN_DAY_DU: 'filters/SET_LIST_PHIEN_BAN_DAY_DU',
+    SET_SHOW_LIST_SAN_PHAM: 'filters/SET_SHOW_LIST_SAN_PHAM',
+    SET_SHOW_LIST_PHIEN_BAN_DAY_DU: 'filters/SET_SHOW_LIST_PHIEN_BAN_DAY_DU',
+    SET_HIDE_LIST_SAN_PHAM: 'filters/SET_HIDE_LIST_SAN_PHAM',
+    SET_HIDE_LIST_PHIEN_BAN_DAY_DU: 'filters/SET_HIDE_LIST_PHIEN_BAN_DAY_DU',
 
 }
 

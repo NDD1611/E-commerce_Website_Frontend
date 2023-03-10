@@ -3,61 +3,47 @@ import './PriceFilter.scss'
 
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addPriceFilter, addPriceFilterBorder } from '../../../redux/actionCreator.js'
 import { listPrices } from './dataFilterCommon.js'
+import FooterFilter from './FooterFilter.js'
+import actionTypes from '../../../redux/actions'
 function PriceFilter() {
 
-    let dispatch = useDispatch()
-    let listIndexBorderFromStore = useSelector((state) => {
-        return state.filters.listIndexPriceBorder
+    let filters = useSelector(state => {
+        return state.filters
     })
-
-    let checkBorderBlue = (index) => {
-        let check = false
-        for (let idx of listIndexBorder) {
-            if (index === idx) {
-                check = true
+    let dispatch = useDispatch()
+    let addPriceFilterStore = (obj) => {
+        let newListPrices = filters.listPriceFilter.map((price) => {
+            if (price.value === obj.value) {
+                return {
+                    ...price,
+                    select: !price.select
+                }
+            } else {
+                return price
             }
-        }
-        return check
-    }
-
-    let handleClick = (indexBD) => {
-        let copyListIndex = [...listIndexBorder]
-        let check = false
-        copyListIndex = copyListIndex.filter((index) => {
-            if (indexBD === index) {
-                check = true
-            }
-            return indexBD !== index
         })
-        if (check === false) {
-            copyListIndex.push(indexBD)
-        }
-
-        let listPriceFilter = listPrices.filter((price, index) => {
-            return copyListIndex.includes(index)
+        dispatch({
+            type: actionTypes.UPDATE_LIST_PRICE_FILTER,
+            payload: newListPrices
         })
-        dispatch(addPriceFilter(listPriceFilter))
-        dispatch(addPriceFilterBorder(copyListIndex))
-        setListIndexBorder(copyListIndex)
     }
-
-    let [listIndexBorder, setListIndexBorder] = useState([])
-
-    useEffect(() => {
-        setListIndexBorder(listIndexBorderFromStore)
-    }, [listIndexBorderFromStore])
-
     return (
         <div>
             <div className="price-content">
+                <div className="content_filter">
+                    {
+                        filters.listPriceFilter.map((obj, index) => {
+                            return (
+                                <div className={obj.select ? 'border-blue' : ''} key={index} onClick={() => { addPriceFilterStore(obj) }} >{obj.value}</div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    listPrices.map((obj, index) => {
-                        return (
-                            <div className={checkBorderBlue(index) ? 'border-blue' : ''} key={index} onClick={() => { handleClick(index) }}>{obj.value}</div>
-                        )
-                    })
+                    filters.showXemKetQuaBPRR ?
+                        <FooterFilter />
+                        : ''
                 }
             </div>
         </div>

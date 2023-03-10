@@ -2,8 +2,9 @@ import actionTypes from '../../actions'
 
 
 const initialState = {
-    listSanPham: [],
-    listSanPhamPhienBan: []
+    listSanPhams: [],
+    listSanPhamPhienBans: [],
+    listBrands: []
 }
 
 export default function dataAllsReducer(state = initialState, action) {
@@ -11,13 +12,19 @@ export default function dataAllsReducer(state = initialState, action) {
         case actionTypes.ADD_LIST_SAN_PHAM: {
             return {
                 ...state,
-                listSanPham: action.payload
+                listSanPhams: action.payload
             }
         }
         case actionTypes.ADD_LIST_SAN_PHAM_DAY_DU: {
             return {
                 ...state,
-                listSanPhamPhienBan: action.payload
+                listSanPhamPhienBans: action.payload
+            }
+        }
+        case actionTypes.ADD_LIST_BRAND: {
+            return {
+                ...state,
+                listBrands: action.payload
             }
         }
         default:

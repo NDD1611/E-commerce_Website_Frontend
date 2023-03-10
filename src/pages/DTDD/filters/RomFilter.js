@@ -2,63 +2,48 @@
 import './RomFilter.scss'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { addRomFilter, addRomFilterBorder } from "../../../redux/actionCreator"
 import { listRoms } from './dataFilterCommon.js'
-
+import FooterFilter from './FooterFilter'
+import actionTypes from '../../../redux/actions'
 
 function RomFilter() {
 
-    let listIndexBorderFromStore = useSelector((state) => {
-        return state.filters.listIndexRomBorder
+    let filters = useSelector(state => {
+        return state.filters
     })
-
-    useEffect(() => {
-        setListIndexBorder(listIndexBorderFromStore)
-    }, [listIndexBorderFromStore])
-
     let dispatch = useDispatch()
-
-    let checkBorderBlue = (index) => {
-        let check = false
-        for (let idx of listIndexBorder) {
-            if (index === idx) {
-                check = true
+    let handleClickRom = (obj) => {
+        let newListRoms = filters.listRomFilter.map((rom) => {
+            if (rom.value === obj.value) {
+                return {
+                    ...rom,
+                    select: !obj.select
+                }
+            } else {
+                return rom
             }
-        }
-        return check
-    }
-
-    let handleClick = (indexBD) => {
-        let copyListIndex = [...listIndexBorder]
-        let check = false
-        copyListIndex = copyListIndex.filter((index) => {
-            if (indexBD === index) {
-                check = true
-            }
-            return indexBD !== index
         })
-        if (check === false) {
-            copyListIndex.push(indexBD)
-        }
-        let listRomFilter = listRoms.filter((ram, index) => {
-            return copyListIndex.includes(index)
+        dispatch({
+            type: actionTypes.UPDATE_LIST_ROM_FILTER,
+            payload: newListRoms
         })
-        dispatch(addRomFilter(listRomFilter))
-        dispatch(addRomFilterBorder(copyListIndex))
-        setListIndexBorder(copyListIndex)
     }
-
-    let [listIndexBorder, setListIndexBorder] = useState([])
-
     return (
         <div>
             <div className="rom-content">
+                <div className="content_filter">
+                    {
+                        filters.listRomFilter.map((obj, index) => {
+                            return (
+                                <div className={obj.select ? 'border-blue' : ''} key={index} onClick={() => { handleClickRom(obj) }}>{obj.value}</div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    listRoms.map((obj, index) => {
-                        return (
-                            <div className={checkBorderBlue(index) ? 'border-blue' : ''} key={index} onClick={() => { handleClick(index) }}>{obj.value}</div>
-                        )
-                    })
+                    filters.showXemKetQuaBPRR ?
+                        <FooterFilter />
+                        : ''
                 }
             </div>
         </div>

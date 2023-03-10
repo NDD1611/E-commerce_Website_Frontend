@@ -1,25 +1,26 @@
 .price-content {
-    z-index: 3;
     position: absolute;
+    z-index: 3;
     top: 0;
     left: 0;
     background-color: #fff;
     box-shadow: 0 0 20px 10px #ccc;
-    width: 500px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 10px;
+    width: 600px;
 
     .border-blue {
-        border: 1px solid blue;
+        border: 1px solid blue !important;
     }
 
+    .content_filter {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 10px;
 
-    div {
-        border: 1px solid #ccc;
-        padding: 5px;
-        border-radius: 5px;
-
+        div {
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+        }
     }
 }

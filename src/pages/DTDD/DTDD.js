@@ -17,38 +17,22 @@ import { useDispatch, useSelector } from "react-redux";
 import MainFilter from "./filters/MainFilter.js";
 
 import actionTypes from '../../redux/actions.js'
+import { listPrices, listRams, listRoms } from './filters/dataFilterCommon'
 
 function DTDD() {
-    let [listSp, setListSp] = useState([])
-    let [showMainFilter, setShowMainFilter] = useState(false)
-    let [showBrandFilter, setShowBrandFilter] = useState(false)
-    let [showPriceFilter, setShowPriceFilter] = useState(false)
-    let [showRamFilter, setShowRamFilter] = useState(false)
-    let [showRomFilter, setShowRomFilter] = useState(false)
-    let [listBrands, setListBrands] = useState([])
-
-    let [listPhienBanDayDu, setListPhienBanDayDu] = useState([])
-
-    let [showPhienBanDayDu, setShowPhienBanDayDu] = useState(false)
-
-    let filter = useSelector((state) => {
-        return state.filters
-    })
-
-    let dispatch = useDispatch()
-    let [listAfterFilter, setListAfterFilter] = useState([])
-    let [listAfterFilterDayDu, setListAfterFilterDayDu] = useState([])
-
     let getAllData = async () => {
         let listBrandFromServer = await Services.getAllNsxDTDD()
         let listProductFromServer = await Services.getAllSanPham()
         let listPhienBanDayDuFromServer = await Services.getPhienBanDayDu()
-        setListPhienBanDayDu(listPhienBanDayDuFromServer)
-        setListSp(listProductFromServer)
-        setListAfterFilter(listProductFromServer)
-        setFilterBrandOnly(listProductFromServer)
-        setListBrands(listBrandFromServer)
-
+        let newListBrands = addFieldSelectListBrand(listBrandFromServer)
+        dispatch({
+            type: actionTypes.SET_LIST_SAN_PHAM,
+            payload: listProductFromServer
+        })
+        dispatch({
+            type: actionTypes.ADD_LIST_BRAND,
+            payload: listBrandFromServer
+        })
         dispatch({
             type: actionTypes.ADD_LIST_SAN_PHAM,
             payload: listProductFromServer
@@ -57,227 +41,274 @@ function DTDD() {
             type: actionTypes.ADD_LIST_SAN_PHAM_DAY_DU,
             payload: listPhienBanDayDuFromServer
         })
+
+        dispatch({
+            type: actionTypes.UPDATE_LIST_BRAND_FILTER,
+            payload: newListBrands
+        })
+        dispatch({
+            type: actionTypes.UPDATE_LIST_PRICE_FILTER,
+            payload: listPrices
+        })
+        dispatch({
+            type: actionTypes.UPDATE_LIST_RAM_FILTER,
+            payload: listRams
+        })
+        dispatch({
+            type: actionTypes.UPDATE_LIST_ROM_FILTER,
+            payload: listRoms
+        })
     }
 
+    let addFieldSelectListBrand = (list) => {
+        let newList = list.map((obj) => {
+            return {
+                ...obj,
+                select: false
+            }
+        })
+        return newList
+    }
 
-    let setShow = (e, name) => {
-        e.stopPropagation();
-        switch (name) {
-            case 'mainFilter':
-                setShowMainFilter(true)
-                setShowBrandFilter(false)
-                setShowPriceFilter(false)
-                setShowRamFilter(false)
-                setShowRomFilter(false)
-                break;
-            case 'brand':
-                setShowMainFilter(false)
-                setShowBrandFilter(true)
-                setShowPriceFilter(false)
-                setShowRamFilter(false)
-                setShowRomFilter(false)
-                break;
-            case 'price':
-                setShowMainFilter(false)
-                setShowPriceFilter(true)
-                setShowBrandFilter(false)
-                setShowRamFilter(false)
-                setShowRomFilter(false)
-                break;
-            case 'ram':
-                setShowMainFilter(false)
-                setShowRamFilter(true)
-                setShowBrandFilter(false)
-                setShowPriceFilter(false)
-                setShowRomFilter(false)
-                break;
-            case 'rom':
-                setShowMainFilter(false)
-                setShowRomFilter(true)
-                setShowBrandFilter(false)
-                setShowPriceFilter(false)
-                setShowRamFilter(false)
-                break;
-        }
-    }
-    let closeShow = () => {
-        setShowMainFilter(false)
-        setShowBrandFilter(false)
-        setShowPriceFilter(false)
-        setShowRamFilter(false)
-        setShowRomFilter(false)
-    }
-    let closeMainFilter = () => {
-        setShowMainFilter(false)
-    }
+    let dispatch = useDispatch()
 
     useEffect(() => {
         getAllData()
     }, [])
 
-    useEffect(() => {
-        console.log("first filter")
-        filterMain()
-    }, [filter])
+    let listBrandStore = useSelector(state => state.filters.listBrandFilter)
+    let listPriceStore = useSelector(state => state.filters.listPriceFilter)
+    let listRamStore = useSelector(state => state.filters.listRamFilter)
+    let listRomStore = useSelector(state => state.filters.listRomFilter)
 
-    let filterBrandOnly = () => {
-        console.log("filter brand only")
-        let listSanPham
-        if (filter.brand.length) {
-            listSanPham = listSp.filter((sp) => {
-                for (let x of filter.brand) {
-                    if (sp.maNsx == x.maNsx) {
-                        return true
-                    }
-                }
-                return false
-            })
-        } else {
-            listSanPham = [...listSp]
-        }
-        return listSanPham
+    let listSanPhamStore = useSelector(state => state.dataAlls.listSanPhams)
+    let listPhienBanDayDuStore = useSelector(state => state.dataAlls.listSanPhamPhienBans)
+    let showMainStore = useSelector(state => state.filters.showMainFilter)
+    let showBrandStore = useSelector(state => state.filters.showBrandFilter)
+    let showPriceStore = useSelector(state => state.filters.showPriceFilter)
+    let showRamStore = useSelector(state => state.filters.showRamFilter)
+    let showRomStore = useSelector(state => state.filters.showRomFilter)
+    let showXemKetQuaMainFilter = useSelector(state => state.filters.showXemKetQuaMainFilter)
+    let showXemKetQuaBPRR = useSelector(state => state.filters.showXemKetQuaBPRR)
+    let listAfterFilterOnlyBrand = useSelector(state => state.filters.listAfterFilterOnlyBrand)
+    let listAfterFilterManyFiled = useSelector(state => state.filters.listAfterFilterManyFiled)
+    let isFilterOnlyBrand = useSelector(state => state.filters.isFilterOnlyBrand)
+    let showMainFilterStore = useSelector(state => state.filters.showMainFilter)
+    let listSanPhams = useSelector(state => state.filters.listSanPhams)
+    let listPhienBanDayDus = useSelector(state => state.filters.listPhienBanDayDus)
+    let isShowListSanPhams = useSelector(state => state.filters.isShowListSanPhams)
+    let isShowListPhienBans = useSelector(state => state.filters.isShowListPhienBans)
+    let showMainFilter = (e) => {
+        e.stopPropagation()
+        dispatch({
+            type: actionTypes.SHOW_MAIN_FILTER
+        })
+        dispatch({
+            type: actionTypes.HIDE_XEM_KET_QUA_BPRR
+        })
+    }
+    let showBrandFilter = (e) => {
+        e.stopPropagation()
+        dispatch({
+            type: actionTypes.SHOW_BRAND_FILTER
+        })
+    }
+    let showPriceFilter = (e) => {
+        e.stopPropagation()
+        dispatch({
+            type: actionTypes.SHOW_PRICE_FILTER
+        })
+    }
+    let showRamFilter = (e) => {
+        e.stopPropagation()
+        dispatch({
+            type: actionTypes.SHOW_RAM_FILTER
+        })
+    }
+    let showRomFilter = (e) => {
+        e.stopPropagation()
+        dispatch({
+            type: actionTypes.SHOW_ROM_FILTER
+        })
+    }
+    let hideAllFilter = () => {
+        dispatch({
+            type: actionTypes.HIDE_ALL_FILTER
+        })
     }
 
-    let filterBrand = (list) => {
-        console.log("filter brand")
-        let listSanPham
-        if (filter.brand.length) {
-            listSanPham = list.filter((sp) => {
-                for (let x of filter.brand) {
-                    if (sp.maNsx == x.maNsx) {
-                        return true
-                    }
-                }
-                return false
-            })
-        } else {
-            listSanPham = [...list]
-        }
-        return listSanPham
-    }
-
-    let filterPrice = (list) => {
-        console.log("filter price")
-        let listSanPham
-        for (let i = 0; i < filter.price.length; i++) {
-            let dau = parseInt(filter.price[i].dau)
-            let cuoi = parseInt(filter.price[i].cuoi)
-            if (dau < 1000000) {
-                dau = parseInt(filter.price[i].dau) * 1000000
-                cuoi = parseInt(filter.price[i].cuoi) * 1000000
+    let checkFilterOnlyBrand = () => { // chi filter tren brand cacs filter khac khong co true, false nguoc lai
+        let check = true
+        listPriceStore.forEach((obj) => {
+            if (obj.select === true) {
+                check = false
             }
-            filter.price[i] = {
-                ...filter.price[i],
-                dau: dau,
-                cuoi: cuoi
+        })
+        listRamStore.forEach((obj) => {
+            if (obj.select === true) {
+                check = false
             }
-        }
-        if (filter.price.length) {
-            listSanPham = list.filter((sp) => {
-                let costSp = parseInt(sp.cost)
-                for (let x of filter.price) {
-                    if (costSp >= x.dau && costSp < x.cuoi) {
-                        return true
-                    }
-                }
-                return false
-            })
-        } else {
-            listSanPham = [...list]
-        }
-        return listSanPham
-    }
-
-    let filterRam = (list) => {
-        console.log('filter ram')
-        let filterRam = filter.ram
-        let listSanPham
-        for (let i = 0; i < filterRam.length; i++) {
-            filterRam[i] = {
-                ...filterRam[i],
-                key: parseInt(filterRam[i].key)
+        })
+        listRomStore.forEach((obj) => {
+            if (obj.select === true) {
+                check = false
             }
-        }
-        if (filterRam.length) {
-            listSanPham = list.filter((sp) => {
-                let ramSp = parseInt(sp.Ram)
-                for (let x of filterRam) {
-                    console.log(ramSp, x)
-                    if (ramSp === x.key) {
-                        return true
-                    }
-                }
-                return false
-            })
-        } else {
-            listSanPham = [...list]
-        }
-        return listSanPham
+        })
+        return check
     }
-
-    let filterRom = (list) => {
-        console.log('filter rom')
-        let filterRom = filter.rom
-        let listSanPham
-        for (let i = 0; i < filterRom.length; i++) {
-            filterRom[i] = {
-                ...filterRom[i],
-                key: parseInt(filterRom[i].key)
+    let filterBrand = (lists) => {
+        let check = false  // bien co thuc hien filter hay khong hay khong
+        for (let brand of listBrandStore) {
+            if (brand.select) {
+                check = true
             }
         }
-        if (filterRom.length) {
-            listSanPham = list.filter((sp) => {
-                let romSp = parseInt(sp.Rom)
-                for (let x of filterRom) {
-                    console.log(romSp, x)
-                    if (romSp === x.key) {
-                        return true
-                    }
-                }
-                return false
-            })
-        } else {
-            listSanPham = [...list]
+        if (check === false) {
+            return lists
         }
-        return listSanPham
+        let newLists = lists.filter((sp) => {
+            for (let brand of listBrandStore) {
+                if (sp.maNsx === brand.maNsx && brand.select === true) {
+                    return true
+                }
+            }
+            return false
+        })
+        return newLists
     }
+    let filterPrice = (lists) => {
+        let check = false  // bien co thuc hien filter hay khong hay khong
+        for (let price of listPriceStore) {
+            if (price.select) {
+                check = true
+            }
+        }
+        if (check === false) {
+            return lists
+        }
+        let newLists = lists.filter((sp) => {
+            let priceSp = parseFloat(sp.cost) - (parseFloat(sp.cost) * parseFloat(sp.discount) / 100)
+            for (let price of listPriceStore) {
+                let dau = parseInt(price.dau) * 1000000
+                let cuoi = parseInt(price.cuoi) * 1000000
+                if (priceSp >= dau && priceSp < cuoi && price.select) {
+                    return true
+                }
+            }
+            return false
+        })
+        return newLists
+    }
+    let filterRam = (lists) => {
+        let check = false  // bien co thuc hien filter hay khong hay khong
+        for (let ram of listRamStore) {
+            if (ram.select) {
+                check = true
+            }
+        }
+        if (check === false) {
+            return lists
+        }
+        let newLists = lists.filter((sp) => {
+            let ramSp = sp.Ram
+            for (let ram of listRamStore) {
+                if (ramSp === ram.key && ram.select) {
+                    return true
+                }
+            }
+            return false
+        })
+        return newLists
+    }
+
+    let filterRom = (lists) => {
+        let check = false  // bien co thuc hien filter hay khong hay khong
+        for (let rom of listRomStore) {
+            if (rom.select) {
+                check = true
+            }
+        }
+        if (check === false) {
+            return lists
+        }
+        let newLists = lists.filter((sp) => {
+            let romSp = sp.Rom
+            for (let rom of listRomStore) {
+                if (romSp === rom.key && rom.select) {
+                    return true
+                }
+            }
+            return false
+        })
+        return newLists
+
+    }
+
     let filterMain = () => {
-        console.log("filter working")
-        if (filter.price.length == 0 && filter.ram.length == 0 && filter.rom.length == 0) {
-            let listSanPham = filterBrandOnly()
-            setListAfterFilter(listSanPham)
-            setLenghtKetQua(listSanPham.length)
+        if (checkFilterOnlyBrand()) {
+            console.log('filter brand')
+            let listAfterBrand = filterBrand(listSanPhamStore)
+            dispatch({
+                type: actionTypes.UPDATE_IS_FILTER_ONLY_BRAND,
+                payload: true
+            })
+            dispatch({
+                type: actionTypes.UPDATE_LIST_AFTER_FILTER_ONLY_BRAND,
+                payload: listAfterBrand
+            })
+            dispatch({
+                type: actionTypes.UPDATE_LENGTH_XEM_KET_QUA,
+                payload: listAfterBrand.length
+            })
+            if (listAfterBrand.length) {
+                dispatch({
+                    type: actionTypes.SHOW_XEM_KET_QUA_BPRR
+                })
+                dispatch({
+                    type: actionTypes.SHOW_XEM_KET_QUA_MAIN
+                })
+            }
         } else {
-            let listAfterBrand = filterBrand(listPhienBanDayDu)
+            console.log('filter many field')
+            let listAfterBrand = filterBrand(listPhienBanDayDuStore)
             let listAfterPrice = filterPrice(listAfterBrand)
             let listAfterRam = filterRam(listAfterPrice)
             let listAfterRom = filterRom(listAfterRam)
-            console.log(listAfterRom)
-            setListAfterFilterDayDu(listAfterRom)
-            setLenghtKetQua(listAfterRom.length)
+            dispatch({
+                type: actionTypes.UPDATE_IS_FILTER_ONLY_BRAND,
+                payload: false
+            })
+            dispatch({
+                type: actionTypes.UPDATE_LIST_AFTER_FILTER_MANY_FIELD,
+                payload: listAfterRom
+            })
+            dispatch({
+                type: actionTypes.UPDATE_LENGTH_XEM_KET_QUA,
+                payload: listAfterRom.length
+            })
+            if (listAfterRom.length) {
+                dispatch({
+                    type: actionTypes.SHOW_XEM_KET_QUA_BPRR
+                })
+                dispatch({
+                    type: actionTypes.SHOW_XEM_KET_QUA_MAIN
+                })
+            }
+        }
+        if (showMainFilterStore) {
+            dispatch({
+                type: actionTypes.HIDE_XEM_KET_QUA_BPRR
+            })
         }
     }
-    let [lengthKetQua, setLenghtKetQua] = useState(0)
-    let [showFilterBrandOnly, setFilterBrandOnly] = useState([])
-    let [showFilterMain, setShowFilterMain] = useState([])
-    let setXemKetQua = () => {
-        setFilterBrandOnly(listAfterFilter)
-        setShowFilterMain(listAfterFilterDayDu)
-        if (filter.price.length === 0 && filter.ram.length === 0 && filter.rom.length === 0) {
-            setShowPhienBanDayDu(false)
-        } else {
-            setShowPhienBanDayDu(true)
-        }
-    }
-
-    let setBoChon = () => {
-        setShowPhienBanDayDu(false)
-        setFilterBrandOnly(listSp)
-    }
+    useEffect(() => {
+        filterMain()
+    }, [listBrandStore, listPriceStore, listRamStore, listRomStore])
+    console.log(listSanPhams, 'listSan ')
     return (
         <div>
             <Header />
-            <div id="DTDD" onClick={() => { closeShow() }}>
+            <div id="DTDD" onClick={hideAllFilter}>
                 <div className='carousel-top'>
                     <div className="left">
                         <CarouselC />
@@ -295,63 +326,68 @@ function DTDD() {
 
                 <div className="filter_container">
                     <div className="filter_top">
-                        <div className="btn my_btn" onClick={(e) => { setShow(e, 'mainFilter') }}>
+                        <div className="btn my_btn" onClick={showMainFilter}>
                             <i className="fa-solid fa-filter i_mg_left"></i>
                             Bộ lọc
-                            <div className='main-filter'>
-                                <div className="arrow-filter"></div>
-                                {showMainFilter ? <MainFilter listSps={listSp} closeMainFilter={closeMainFilter}
-                                    listBrands={listBrands} setXemKetQua={setXemKetQua} lengthKetQua={lengthKetQua}
-                                    setBoChon={setBoChon} /> : ''}
-                            </div>
+                            {
+                                showMainStore ?
+                                    <div className='main-filter'>
+                                        <div className="arrow-filter"></div>
+                                        <MainFilter />
+                                    </div>
+                                    : ''
+                            }
                         </div>
-                        <div className="btn my_btn" onClick={(e) => { setShow(e, 'brand') }}>
+                        <div className="btn my_btn" onClick={showBrandFilter}>
                             Hãng
                             <i className="fa-solid fa-caret-down"></i>
-                            <div className='brand'>
-                                {showBrandFilter ? <div className="arrow-filter"></div> : ''}
-                                {showBrandFilter ? <BrandFilter listBrands={listBrands} /> : ''}
-                            </div>
+                            {
+                                showBrandStore ?
+                                    <div className='brand'>
+                                        <div className="arrow-filter"></div>
+                                        <BrandFilter />
+                                    </div>
+                                    : ''
+                            }
                         </div>
-                        <div className="btn my_btn" onClick={(e) => { setShow(e, 'price') }}>
+                        <div className="btn my_btn" onClick={showPriceFilter}>
                             Giá
                             <i className="fa-solid fa-caret-down"></i>
-
-                            <div className='price'>
-                                {showPriceFilter ? <div className="arrow-filter"></div> : ''}
-                                {showPriceFilter ? <PriceFilter /> : ''}
-                            </div>
+                            {
+                                showPriceStore ?
+                                    <div className='price'>
+                                        <div className="arrow-filter"></div>
+                                        <PriceFilter />
+                                    </div>
+                                    : ''
+                            }
                         </div>
-                        <div className="btn my_btn" onClick={(e) => { setShow(e, 'ram') }}>
+                        <div className="btn my_btn" onClick={showRamFilter}>
                             RAM
                             <i className="fa-solid fa-caret-down"></i>
-
-                            <div className='ram'>
-                                {showRamFilter ? <div className="arrow-filter"></div> : ''}
-                                {showRamFilter ? <RamFilter /> : ''}
-                            </div>
+                            {
+                                showRamStore ?
+                                    <div className='ram'>
+                                        <div className="arrow-filter"></div>
+                                        <RamFilter />
+                                    </div>
+                                    : ''
+                            }
                         </div>
-                        <div className="btn my_btn" onClick={(e) => { setShow(e, 'rom') }}>
+                        <div className="btn my_btn" onClick={showRomFilter}>
                             Dung lượng lưu trữ
                             <i className="fa-solid fa-caret-down"></i>
-                            <div className='rom'>
-                                {showRomFilter ? <div className="arrow-filter"></div> : ''}
-                                {showRomFilter ? <RomFilter /> : ''}
-                            </div>
+                            {
+                                showRomStore ?
+                                    <div className='rom'>
+                                        <div className="arrow-filter"></div>
+                                        <RomFilter />
+                                    </div>
+                                    : ''
+                            }
                         </div>
                     </div>
                     <div className="filter_brand">
-                        {/* <BrandFilter listBrands={listBrands} /> */}
-                        {/* {
-                            listBrands.map((brand, index) => {
-                                return (
-                                    <div key={index} className="brand_img">
-
-                                        <img src={brand.linkImg} />
-                                    </div>
-                                )
-                            })
-                        } */}
                     </div>
                     <div className="filter_bottom">
                         <div className="title">Chọn điện thoại theo nhu cầu:</div>
@@ -365,33 +401,32 @@ function DTDD() {
 
                 </div>
 
-                {
-                    !showPhienBanDayDu ?
-                        <ul className="list_product">
-                            {
-                                showFilterBrandOnly.map((sp, index) => {
-                                    return (
-                                        <PhienBan sp={sp} key={index} />
-                                    )
-                                })
-                            }
-                        </ul>
-                        : ''
+
+                {isShowListSanPhams ?
+                    <ul className="list_product">
+                        {
+                            listSanPhams.map((sp, index) => {
+                                return (
+                                    <PhienBan sp={sp} key={index} />
+                                )
+                            })
+                        }
+                    </ul>
+                    : ''
+                }
+                {isShowListPhienBans ?
+                    <ul className="list_product_phien_ban_day_du">
+                        {
+                            listPhienBanDayDus.map((sp, index) => {
+                                return (
+                                    <PhienBanDayDu sp={sp} key={index} />
+                                )
+                            })
+                        }
+                    </ul>
+                    : ''
                 }
 
-                {
-                    showPhienBanDayDu ?
-                        <ul className="list_product_phien_ban_day_du">
-                            {
-                                showFilterMain.map((sp, index) => {
-                                    return (
-                                        <PhienBanDayDu sp={sp} key={index} />
-                                    )
-                                })
-                            }
-                        </ul>
-                        : ''
-                }
             </div>
             <Footer />
         </div >

@@ -1,0 +1,21 @@
+.footer_filter {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    gap: 20px;
+
+    .bo_chon {
+        color: #dd1c1a;
+        border: 1px solid #dd1c1a;
+    }
+
+    .ket_qua {
+        background-color: #288ad6;
+        color: #fff;
+    }
+
+    button {
+        padding: 5px 10px;
+        border-radius: 3px;
+    }
+}

@@ -1,67 +1,47 @@
 
 import './RamFilter.scss'
-import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { addRamFilter, addRamFilterBorder } from "../../../redux/actionCreator"
-import { listRams } from './dataFilterCommon.js'
+import FooterFilter from './FooterFilter'
+import actionTypes from '../../../redux/actions'
 
 function RamFilter() {
-
-
-
-    let listIndexBorderFromStore = useSelector((state) => {
-        return state.filters.listIndexRamBorder
+    let filters = useSelector(state => {
+        return state.filters
     })
-
-    useEffect(() => {
-        setListIndexBorder(listIndexBorderFromStore)
-    }, [listIndexBorderFromStore])
-
     let dispatch = useDispatch()
-
-    let [listIndexBorder, setListIndexBorder] = useState([])
-
-
-    let checkBorderBlue = (index) => {
-        let check = false
-        for (let idx of listIndexBorder) {
-            if (index === idx) {
-                check = true
+    let handleClickRam = (obj) => {
+        let newListRams = filters.listRamFilter.map((ram) => {
+            if (ram.value === obj.value) {
+                return {
+                    ...ram,
+                    select: !obj.select
+                }
+            } else {
+                return ram
             }
-        }
-        return check
-    }
-
-    let handleClick = (indexBD) => {
-        let copyListIndex = [...listIndexBorder]
-        let check = false
-        copyListIndex = copyListIndex.filter((index) => {
-            if (indexBD === index) {
-                check = true
-            }
-            return indexBD !== index
         })
-        if (check === false) {
-            copyListIndex.push(indexBD)
-        }
-
-        let listRamFilter = listRams.filter((ram, index) => {
-            return copyListIndex.includes(index)
+        dispatch({
+            type: actionTypes.UPDATE_LIST_RAM_FILTER,
+            payload: newListRams
         })
-        dispatch(addRamFilter(listRamFilter))
-        dispatch(addRamFilterBorder(copyListIndex))
-        setListIndexBorder(copyListIndex)
     }
-
     return (
         <div>
             <div className="ram-content">
+                <div className="content_filter">
+                    {
+                        filters.listRamFilter.map((obj, index) => {
+                            return (
+                                <div className={obj.select ? 'border-blue' : ''}
+                                    key={index} onClick={() => { handleClickRam(obj) }}>{obj.value}</div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    listRams.map((obj, index) => {
-                        return (
-                            <div className={checkBorderBlue(index) ? 'border-blue' : ''} key={index} onClick={() => { handleClick(index) }}>{obj.value}</div>
-                        )
-                    })
+                    filters.showXemKetQuaBPRR ?
+                        <FooterFilter />
+                        : ''
                 }
             </div>
         </div>
